@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClickShop | Sua loja online</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f6fa;
+    color: #222;
+}
+
+header {
+    background: #101828;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #ffb800;
+}
+
+.logo span {
+    color: white;
+}
+
+.search {
+    display: flex;
+    flex: 1;
+    max-width: 450px;
+}
+
+.search input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px 0 0 6px;
+    outline: none;
+}
+
+.search button {
+    background: #ffb800;
+    border: none;
+    padding: 12px 18px;
+    cursor: pointer;
+    border-radius: 0 6px 6px 0;
+}
+
+.cart {
+    background: #263449;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    border: none;
+    font-size: 15px;
+}
+
+nav {
+    background: white;
+    padding: 15px 7%;
+    display: flex;
+    gap: 30px;
+    box-shadow: 0 2px 6px #ddd;
+    flex-wrap: wrap;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #e99e00;
+}
+
+.hero {
+    margin: 30px auto;
+    width: 86%;
+    min-height: 280px;
+    border-radius: 15px;
+    padding: 55px;
+    background: linear-gradient(120deg, #101828, #31547d);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.hero button {
+    background: #ffb800;
+    color: #101828;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.container {
+    width: 86%;
+    margin: 40px auto;
+}
+
+.section-title {
+    margin-bottom: 25px;
+    font-size: 25px;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.category {
+    background: white;
+    padding: 25px 10px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+.category:hover {
+    transform: translateY(-4px);
+    transition: .2s;
+}
+
+.category div {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.product {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px #ddd;
+    transition: .2s;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef1f5;
+    font-size: 65px;
+}
+
+.product-info {
+    padding: 17px;
+}
+
+.product-info h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.price {
+    color: #07834e;
+    font-size: 21px;
+    font-weight: bold;
+    margin: 12px 0;
+}
+
+.product button {
+    width: 100%;
+    background: #101828;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.product button:hover {
+    background: #ffb800;
+    color: #101828;
+}
+
+footer {
+    background: #101828;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 60px;
+}
+
+.empty {
+    padding: 25px;
+    text-align: center;
+    background: white;
+    border-radius: 10px;
+}
+
+.cart-panel {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: min(380px, 100%);
+    height: 100vh;
+    background: white;
+    z-index: 10;
+    padding: 25px;
+    box-shadow: -5px 0 20px #0002;
+    transition: .3s;
+    overflow-y: auto;
+}
+
+.cart-panel.open {
+    right: 0;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.cart-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item button {
+    margin-top: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.cart-total {
+    font-size: 21px;
+    font-weight: bold;
+    margin: 25px 0;
+}
+
+.close {
+    border: none;
+    background: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.checkout {
+    width: 100%;
+    background: #07834e;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@media(max-width: 800px) {
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero {
+        padding: 30px;
+    }
+
+    .hero h1 {
+        font-size: 29px;
+    }
+}
+
+@media(max-width: 480px) {
+    header {
+        padding: 18px 5%;
+    }
+
+    .search {
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    nav {
+        gap: 15px;
+        padding: 15px 5%;
+    }
+
+    .container, .hero {
+        width: 92%;
+    }
+
+    .products {
+        gap: 12px;
+    }
+
+    .product-image {
+        height: 130px;
+    }
+
+    .product-info {
+        padding: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Click<span>Shop</span>.</div>
+
+    <div class="search">
+        <input type="text" id="searchInput"
+        placeholder="O que você procura?">
+        <button onclick="searchProducts()">🔍</button>
+    </div>
+
+    <button class="cart" onclick="toggleCart()">
+        🛒 Carrinho (<span id="cartCount">0</span>)
+    </button>
+</header>
+
+<nav>
+    <a href="#">Início</a>
+    <a href="#categorias">Categorias</a>
+    <a href="#produtos">Produtos</a>
+    <a href="#footer">Contato</a>
+</nav>
+
+<section class="hero">
+    <h1>As melhores ofertas estão aqui!</h1>
+    <p>Descubra produtos incríveis com preços especiais.</p>
+    <button onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">
+        COMPRAR AGORA
+    </button>
+</section>
+
+<section class="container" id="categorias">
+    <h2 class="section-title">Explore nossas categorias</h2>
+
+    <div class="categories">
+        <div class="category" onclick="filterCategory('Eletrônicos')">
+            <div>📱</div>
+            Eletrônicos
+        </div>
+
+        <div class="category" onclick="filterCategory('Moda')">
+            <div>👕</div>
+            Moda
+        </div>
+
+        <div class="category" onclick="filterCategory('Casa')">
+            <div>🏠</div>
+            Casa
+        </div>
+
+        <div class="category" onclick="filterCategory('Acessórios')">
+            <div>⌚</div>
+            Acessórios
+        </div>
+    </div>
+</section>
+
+<section class="container" id="produtos">
+    <h2 class="section-title">Produtos em destaque</h2>
+    <div class="products" id="productList"></div>
+</section>
+
+<aside class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+        <h2>Meu carrinho 🛒</h2>
+        <button class="close" onclick="toggleCart()">×</button>
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="cart-total">
+        Total: R$ <span id="cartTotal">0,00</span>
+    </div>
+
+    <button class="checkout" onclick="checkout()">
+        Finalizar pedido
+    </button>
+</aside>
+
+<footer id="footer">
+    <h2>ClickShop</h2>
+    <p>Sua experiência de compras começa aqui!</p>
+    <p>© 2026 ClickShop - Todos os direitos reservados.</p>
+</footer>
+
+<script>
+const products = [
+    {id:1, name:"Smartphone", category:"Eletrônicos", price:1299.90, emoji:"📱"},
+    {id:2, name:"Fone Bluetooth", category:"Eletrônicos", price:149.90, emoji:"🎧"},
+    {id:3, name:"Relógio Moderno", category:"Acessórios", price:199.90, emoji:"⌚"},
+    {id:4, name:"Camiseta Casual", category:"Moda", price:79.90, emoji:"👕"},
+    {id:5, name:"Tênis Esportivo", category:"Moda", price:229.90, emoji:"👟"},
+    {id:6, name:"Luminária LED", category:"Casa", price:89.90, emoji:"💡"},
+    {id:7, name:"Mochila", category:"Acessórios", price:119.90, emoji:"🎒"},
+    {id:8, name:"Cafeteira", category:"Casa", price:249.90, emoji:"☕"}
+];
+
+let cart = [];
+
+function money(value) {
+    return value.toLocaleString("pt-BR", {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+    });
+}
+
+function renderProducts(list = products) {
+    const container = document.getElementById("productList");
+
+    if (list.length === 0) {
+        container.innerHTML = '<p>Nenhum produto encontrado.</p>';
+        return;
+    }
+
+    container.innerHTML = list.map(product => `
+        <article class="product">
+            <div class="product-image">${product.emoji}</div>
+            <div class="product-info">
+                <h3>${product.name}</h3>
+                <small>${product.category}</small>
+                <div class="price">R$ ${money(product.price)}</div>
+                <button onclick="addToCart(${product.id})">
+                    Adicionar ao carrinho
+                </button>
+            </div>
+        </article>
+    `).join("");
+}
+
+function addToCart(id) {
+    const product = products.find(p => p.id === id);
+    const item = cart.find(p => p.id === id);
+
+    if (item) {
+        item.quantity++;
+    } else {
+        cart.push({...product, quantity:1});
+    }
+
+    updateCart();
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCart();
+}
+
+function updateCart() {
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const total = cart.reduce((sum, item) =>
+        sum + item.price * item.quantity, 0);
+
+    document.getElementById("cartCount").textContent = count;
+    document.getElementById("cartTotal").textContent = money(total);
+
+    const container = document.getElementById("cartItems");
+
+    if (cart.length === 0) {
+        container.innerHTML = '<div class="empty">Seu carrinho está vazio.</div>';
+    } else {
+        container.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <strong>${item.emoji} ${item.name}</strong>
+                <p>Quantidade: ${item.quantity}</p>
+                <p>R$ ${money(item.price * item.quantity)}</p>
+                <button onclick="removeFromCart(${item.id})">
+                    Remover
+                </button>
+            </div>
+        `).join("");
+    }
+}
+
+function toggleCart() {
+    document.getElementById("cartPanel").classList.toggle("open");
+}
+
+function searchProducts() {
+    const term = document.getElementById("searchInput")
+        .value.toLowerCase().trim();
+
+    const result = products.filter(p =>
+        p.name.toLowerCase().includes(term) ||
+        p.category.toLowerCase().includes(term)
+    );
+
+    renderProducts(result);
+    document.getElementById("produtos")
+        .scrollIntoView({behavior:"smooth"});
+}
+
+function filterCategory(category) {
+    renderProducts(products.filter(p => p.category === category));
+    document.getElementById("produtos")
+        .scrollIntoView({behavior:"smooth"});
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+
+    alert("Carrinho preparado! A integração de pagamento será configurada na próxima etapa.");
+}
+
+document.getElementById("searchInput")
+    .addEventListener("keydown", event => {
+        if (event.key === "Enter") searchProducts();
+    });
+
+renderProducts();
+updateCart();
+</script>
+
+</body>
+</html>
